@@ -1,0 +1,204 @@
+.positions-page {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.positions-page .page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.positions-page .header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.positions-by-ala {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.positions-by-ala .data-card {
+  margin-bottom: 0;
+}
+
+.ala-positions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.position-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  background: var(--content-bg);
+  border-radius: 10px;
+  border: 1px solid var(--card-border);
+}
+
+.position-card__icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.position-card__content {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 16px;
+}
+
+.position-card__title {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.position-card__level {
+  font-size: 0.8rem;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--accent);
+}
+
+.position-card__salary {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.position-card__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  padding: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--text-secondary);
+}
+
+.btn-icon:hover {
+  background: var(--content-bg);
+  color: var(--text-primary);
+}
+
+.btn-icon.btn-danger:hover {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+
+.positions-page .modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 24px;
+}
+
+.positions-page .modal-content {
+  background: var(--card-bg);
+  border-radius: 16px;
+  max-width: 440px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.positions-page .modal-content.modal-position {
+  max-width: 480px;
+}
+
+.positions-page .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.positions-page .modal-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.positions-page .modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-secondary);
+  line-height: 1;
+}
+
+.positions-page .modal-close:hover {
+  color: var(--text-primary);
+}
+
+.positions-page .modal-form {
+  padding: 24px;
+}
+
+.positions-page .form-field {
+  margin-bottom: 18px;
+}
+
+.positions-page .form-field label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.positions-page .form-field input,
+.positions-page .form-field select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  background: var(--content-bg);
+}
+
+.positions-page .modal-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.positions-page .btn-cancel {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid var(--card-border);
+  background: var(--content-bg);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.positions-page .btn-cancel:hover {
+  background: var(--card-bg);
+  color: var(--text-primary);
+}

@@ -40,4 +40,15 @@
 
 .form-actions {
   margin-top: 8px;
+  display: flex;
+  gap: 12px;
+}
+
+.form-actions .btn-cancel {
+  padding: 10px 20px;
+  background: var(--content-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  cursor: pointer;
 }

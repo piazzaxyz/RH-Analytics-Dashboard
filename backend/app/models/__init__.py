@@ -1,5 +1,6 @@
 from .employee import Employee
 from .department import Department
+from .ala import Ala
 from .position import Position
 from .user import User
 from .audit import *

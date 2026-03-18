@@ -22,15 +22,18 @@ api.interceptors.response.use(
   },
   (error: AxiosError) => {
     isRedirecting = false;
-    const status = error.response?.status;
+    if (!error.response) return Promise.reject(error);
+    const status = error.response.status;
     const url = error.config?.url || '';
     const hadToken = !!error.config?.headers?.Authorization;
-    const detail = String(error.response?.data?.detail || '').toLowerCase();
+    const rawDetail = error.response?.data?.detail;
+    const detail = typeof rawDetail === 'string' ? rawDetail.toLowerCase() : '';
 
-    if (status === 401 && !isRedirecting && error.response) {
-      const isLoginRequest = url.includes('/auth/login');
-      const isAuthError = detail.includes('token') || detail.includes('autentic') || detail.includes('unauthorized') || detail.includes('não encontrado') || detail.includes('inativo');
-      if (!isLoginRequest && hadToken && isAuthError) {
+    if (status === 401 && !isRedirecting && hadToken && !url.includes('/auth/login')) {
+      const isTokenInvalid = detail.includes('token inválido');
+      const isUserInactive = detail.includes('usuário não encontrado ou inativo');
+      const isDataRequest = url.includes('/employees') || url.includes('/departments') || url.includes('/positions') || url.includes('/payroll') || url.includes('/dashboard');
+      if ((isTokenInvalid || isUserInactive) && !isDataRequest) {
         isRedirecting = true;
         removeToken();
         window.location.replace('/login');

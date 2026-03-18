@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Users, Clock, DollarSign, Award, Wallet, LogOut } from 'lucide-react';
+import { LayoutDashboard, Users, Clock, DollarSign, Award, Briefcase, Wallet, LogOut } from 'lucide-react';
 import { removeToken } from '../../services/auth';
 import './Sidebar.css';
 
@@ -10,6 +10,7 @@ const navItems = [
   { to: '/timesheets', icon: Clock, label: 'Ponto' },
   { to: '/payroll', icon: DollarSign, label: 'Folha' },
   { to: '/evaluations', icon: Award, label: 'Avaliações' },
+  { to: '/positions', icon: Briefcase, label: 'Cargos' },
   { to: '/loans', icon: Wallet, label: 'Empréstimos' },
 ];
 

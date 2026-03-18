@@ -265,14 +265,34 @@ def get_employee(id: int, db: Session = Depends(get_db), user: User = Depends(re
 		updated_at=e.updated_at
 	)
 
+def _parse_date(val):
+	if val is None or val == "":
+		return None
+	if hasattr(val, "year"):
+		return val
+	try:
+		from datetime import datetime
+		return datetime.strptime(str(val)[:10], "%Y-%m-%d").date()
+	except (ValueError, TypeError):
+		return None
+
 @router.put("/{id}", response_model=EmployeeResponse)
-def update_employee(id: int, data: dict, db: Session = Depends(get_db), user: User = Depends(require_role("admin", "rh"))):
+def update_employee(id: int, data: dict = Body(...), db: Session = Depends(get_db), user: User = Depends(require_role("admin", "rh"))):
 	e = db.query(Employee).filter(Employee.id == id).first()
 	if not e:
 		raise HTTPException(status_code=404, detail="Colaborador não encontrado")
 	old_data = {c.name: getattr(e, c.name) for c in e.__table__.columns}
+	date_fields = {"birth_date", "admission_date", "dismissal_date"}
+	valid_cols = {c.name for c in e.__table__.columns}
 	for key, value in data.items():
-		setattr(e, key, value)
+		if key not in valid_cols or key == "id":
+			continue
+		if key in date_fields and value is not None:
+			parsed = _parse_date(value)
+			if parsed is not None:
+				setattr(e, key, parsed)
+		else:
+			setattr(e, key, value)
 	db.commit()
 	db.refresh(e)
 	log_audit(db, user.id, "update", "employee", e.id, old_data, data, "127.0.0.1")

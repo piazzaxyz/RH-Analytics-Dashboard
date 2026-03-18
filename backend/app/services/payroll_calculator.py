@@ -1,16 +1,19 @@
 from app.services.inss_calculator import calculate_inss
 from app.services.irrf_calculator import calculate_irrf
-from app.models.payroll import Payroll
-from app.models.timesheet import Timesheet
+from app.models.payroll import Payroll, PayrollStatus
+from app.models.timesheet import Timesheet, TimesheetStatus
 from app.models.employee import Employee
-from app.models.loan_installment import LoanInstallment
+from app.models.loan import Loan
+from app.models.loan_installment import LoanInstallment, LoanInstallmentStatus
 from sqlalchemy.orm import Session
 from datetime import datetime
 
 def calculate_payroll(employee_id: int, month: str, db: Session):
 	employee = db.query(Employee).filter(Employee.id == employee_id).first()
+	if not employee:
+		raise ValueError(f"Colaborador {employee_id} não encontrado")
 	timesheets = db.query(Timesheet).filter(Timesheet.employee_id == employee_id, Timesheet.date.like(f"{month}-%")).all()
-	base_salary = employee.salary
+	base_salary = float(employee.salary or 0)
 	overtime_50 = 0.0
 	overtime_100 = 0.0
 	night_additional = 0.0
@@ -25,18 +28,17 @@ def calculate_payroll(employee_id: int, month: str, db: Session):
 	days_worked = 0
 	domingos_feriados = 0
 	for t in timesheets:
-		total_minutes += t.total_minutes
-		overtime_50_minutes += t.overtime_50_minutes
-		overtime_100_minutes += t.overtime_100_minutes
-		night_shift_minutes += t.night_shift_minutes
-		if t.status == 'ok':
+		total_minutes += (t.total_minutes or 0)
+		overtime_50_minutes += (t.overtime_50_minutes or 0)
+		overtime_100_minutes += (t.overtime_100_minutes or 0)
+		night_shift_minutes += (t.night_shift_minutes or 0)
+		if t.status == TimesheetStatus.ok or (hasattr(t.status, 'value') and t.status.value == 'ok'):
 			days_worked += 1
-		# Supondo domingo/feriado marcado
-		if t.date.weekday() == 6:
+		if t.date and t.date.weekday() == 6:
 			domingos_feriados += 1
-	overtime_50 = (base_salary / 220) * 1.5 * (overtime_50_minutes / 60)
-	overtime_100 = (base_salary / 220) * 2.0 * (overtime_100_minutes / 60)
-	night_additional = (base_salary / 220) * 0.2 * (night_shift_minutes / 60)
+	overtime_50 = (base_salary / 220) * 1.5 * (overtime_50_minutes / 60) if base_salary else 0
+	overtime_100 = (base_salary / 220) * 2.0 * (overtime_100_minutes / 60) if base_salary else 0
+	night_additional = (base_salary / 220) * 0.2 * (night_shift_minutes / 60) if base_salary else 0
 	dsr = ((overtime_50 + overtime_100) / days_worked) * domingos_feriados if days_worked else 0
 	gross_salary = base_salary + overtime_50 + overtime_100 + night_additional + dsr + bonus + hazard_pay + unhealthy_pay
 	inss_value = calculate_inss(gross_salary)
@@ -46,7 +48,12 @@ def calculate_payroll(employee_id: int, month: str, db: Session):
 	vt_discount = 0.0
 	vr_discount = 0.0
 	health_plan_discount = 0.0
-	loan_discount = sum([li.amount for li in db.query(LoanInstallment).filter(LoanInstallment.employee_id == employee_id, LoanInstallment.due_month == month, LoanInstallment.status == 'pendente').all()])
+	loan_ids = [l.id for l in db.query(Loan).filter(Loan.employee_id == employee_id).all()]
+	loan_discount = sum([li.amount for li in db.query(LoanInstallment).filter(
+		LoanInstallment.loan_id.in_(loan_ids),
+		LoanInstallment.due_month == month,
+		LoanInstallment.status == LoanInstallmentStatus.pendente
+	).all()]) if loan_ids else 0
 	absence_discount = 0.0
 	alimony_discount = 0.0
 	other_discounts = 0.0
@@ -73,7 +80,7 @@ def calculate_payroll(employee_id: int, month: str, db: Session):
 		alimony_discount=alimony_discount,
 		other_discounts=other_discounts,
 		net_salary=net_salary,
-		status='rascunho',
-		processed_at=datetime.now()
+		status=PayrollStatus.rascunho,
+		processed_at=None
 	)
 	return payroll

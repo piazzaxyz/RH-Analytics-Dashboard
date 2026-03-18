@@ -3,11 +3,13 @@ import { UserPlus, Search, Loader2 } from 'lucide-react';
 import Button from '../components/ui/Button';
 import DataCard from '../components/ui/DataCard';
 import EmployeeForm from '../components/EmployeeForm';
+import EmployeeDetailModal from '../components/EmployeeDetailModal';
 import { fetchEmployees, createEmployee } from '../services/employee';
 import './EmployeesPage.css';
 
 const EmployeesPage: React.FC = () => {
   const [open, setOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
   const [employees, setEmployees] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -79,7 +81,7 @@ const EmployeesPage: React.FC = () => {
               </thead>
               <tbody>
                 {employees.map((emp) => (
-                  <tr key={emp.id}>
+                  <tr key={emp.id} className="clickable-row" onClick={() => setSelectedId(emp.id)}>
                     <td>
                       <span className="emp-name">{emp.full_name}</span>
                       <span className="emp-email">{emp.email}</span>
@@ -113,6 +115,14 @@ const EmployeesPage: React.FC = () => {
             <EmployeeForm onSubmit={handleSubmit} />
           </div>
         </div>
+      )}
+
+      {selectedId && (
+        <EmployeeDetailModal
+          employeeId={selectedId}
+          onClose={() => setSelectedId(null)}
+          onSaved={() => { loadEmployees(); setSelectedId(null); }}
+        />
       )}
     </div>
   );

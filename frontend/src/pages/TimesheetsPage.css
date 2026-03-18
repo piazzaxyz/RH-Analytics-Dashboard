@@ -3,10 +3,254 @@
   margin: 0 auto;
 }
 
+.timesheets-page .page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.timesheets-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.timesheets-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: 1px solid var(--card-border);
+  background: var(--content-bg);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.timesheets-tab:hover {
+  background: var(--card-bg);
+  color: var(--text-primary);
+}
+
+.timesheets-tab.active {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.tab-badge {
+  background: rgba(255,255,255,0.3);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+}
+
+.timesheets-tab.active .tab-badge {
+  background: rgba(255,255,255,0.4);
+}
+
+.month-input {
+  padding: 8px 14px;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  background: var(--content-bg);
+}
+
+.overtime-table {
+  overflow-x: auto;
+}
+
+.overtime-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.overtime-table th,
+.overtime-table td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.overtime-table th {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.overtime-hours-cell {
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.overtime-parecer-input {
+  width: 100%;
+  min-width: 200px;
+  padding: 8px 12px;
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-family: inherit;
+}
+
+.overtime-parecer-text {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  max-width: 200px;
+  display: inline-block;
+}
+
+.overtime-disposition-select {
+  padding: 6px 12px;
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.disposition-badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.disposition-badge.disposition-pago {
+  background: rgba(34, 197, 94, 0.15);
+  color: #16a34a;
+}
+
+.disposition-badge.disposition-banco_horas {
+  background: rgba(59, 130, 246, 0.15);
+  color: #2563eb;
+}
+
+.disposition-badge.disposition-used {
+  background: rgba(34, 197, 94, 0.15);
+  color: #16a34a;
+}
+
+.disposition-badge.disposition-unused {
+  background: rgba(156, 163, 175, 0.2);
+  color: #6b7280;
+}
+
+.overtime-add-modal {
+  max-width: 520px;
+  min-height: 580px;
+  max-height: 90vh;
+}
+
+.overtime-add-form {
+  padding: 24px 28px;
+}
+
+.overtime-add-form .form-field,
+.overtime-add-form .form-row {
+  margin-bottom: 18px;
+}
+
+.overtime-add-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.overtime-add-form textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  font-family: inherit;
+}
+
+.timesheets-page .modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 24px;
+}
+
+.timesheets-page .modal-content {
+  background: var(--card-bg);
+  border-radius: 16px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.timesheets-page .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.timesheets-page .modal-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.timesheets-page .modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-secondary);
+}
+
+.overtime-add-form .modal-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.overtime-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-edit, .btn-save, .btn-cancel {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-edit {
+  background: var(--accent);
+  color: white;
+}
+
+.btn-save {
+  background: #22c55e;
+  color: white;
+}
+
+.btn-cancel {
+  background: var(--content-bg);
+  color: var(--text-secondary);
+  border: 1px solid var(--card-border);
+}
+
 .import-actions {
   display: flex;
   gap: 12px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .file-input-label {

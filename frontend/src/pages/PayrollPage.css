@@ -67,3 +67,118 @@
   font-weight: 600;
   color: var(--success);
 }
+
+.payroll-card__bonus {
+  font-size: 0.8rem;
+  color: var(--accent);
+}
+
+.payroll-card__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.btn-bonus {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(139, 92, 246, 0.15);
+  color: #8b5cf6;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.btn-bonus:hover {
+  background: rgba(139, 92, 246, 0.25);
+}
+
+.payroll-page .modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 24px;
+}
+
+.payroll-page .modal-content {
+  background: var(--card-bg);
+  border-radius: 16px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.payroll-page .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.payroll-page .modal-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.payroll-page .modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-secondary);
+  line-height: 1;
+}
+
+.bonus-modal-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.bonus-modal-emp {
+  margin: 0;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.bonus-modal-body .form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bonus-modal-body .form-field label {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.bonus-modal-body .form-field input {
+  padding: 10px 14px;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.bonus-modal-body .btn-cancel {
+  padding: 10px 20px;
+  background: var(--content-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  cursor: pointer;
+}

@@ -15,7 +15,10 @@ class TimesheetResponse(BaseModel):
 	overtime_50_minutes: int
 	overtime_100_minutes: int
 	night_shift_minutes: int
-	justification: Optional[str]
+	overtime_disposition: Optional[str] = None
+	overtime_parecer: Optional[str] = None
+	overtime_used: Optional[int] = None
+	justification: Optional[str] = None
 	status: Literal["ok", "inconsistente", "justificado"]
 	created_at: datetime
 	updated_at: datetime

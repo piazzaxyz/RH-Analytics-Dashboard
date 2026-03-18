@@ -62,6 +62,93 @@
   background: var(--content-bg);
 }
 
+.employees-table .clickable-row {
+  cursor: pointer;
+}
+
+.employee-detail-modal {
+  max-width: 560px;
+  min-height: 420px;
+  padding: 0;
+}
+
+.employee-detail-modal .modal-header {
+  padding: 24px 28px;
+}
+
+.employee-detail-view {
+  padding: 28px;
+  min-height: 320px;
+}
+
+.employee-detail-view .detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--card-border);
+  min-height: 48px;
+}
+
+.employee-detail-view .detail-label {
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.employee-detail-view .detail-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+  padding-top: 24px;
+  flex-wrap: wrap;
+}
+
+.employee-detail-edit {
+  padding: 24px 28px;
+  min-height: 200px;
+}
+
+.employee-detail-bonus,
+.employee-detail-promote {
+  padding: 28px;
+  min-height: 200px;
+}
+
+.employee-detail-bonus .form-field,
+.employee-detail-promote .form-field {
+  margin-bottom: 16px;
+}
+
+.employee-detail-bonus .modal-actions,
+.employee-detail-promote .modal-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.employee-detail-bonus .btn-cancel,
+.employee-detail-promote .btn-cancel {
+  padding: 10px 20px;
+  background: var(--content-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.form-hint {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin: 0 0 16px;
+}
+
+.modal-loading {
+  padding: 48px;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
 .emp-name {
   display: block;
   font-weight: 500;
@@ -102,6 +189,7 @@
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
 }
 
 .modal-header {

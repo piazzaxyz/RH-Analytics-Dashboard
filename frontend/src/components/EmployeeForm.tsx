@@ -6,9 +6,11 @@ import './EmployeeForm.css';
 
 interface EmployeeFormProps {
   onSubmit: (data: any) => void;
+  initialData?: any;
+  onCancel?: () => void;
 }
 
-const EmployeeForm: React.FC<EmployeeFormProps> = ({ onSubmit }) => {
+const EmployeeForm: React.FC<EmployeeFormProps> = ({ onSubmit, initialData, onCancel }) => {
   const [departments, setDepartments] = useState<{ id: number; name: string }[]>([]);
   const [positions, setPositions] = useState<{ id: number; title: string }[]>([]);
   const [form, setForm] = useState({
@@ -39,7 +41,29 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ onSubmit }) => {
       const pos = Array.isArray(p) ? p : [];
       setDepartments(depts);
       setPositions(pos);
-      if (depts.length || pos.length) {
+      if (initialData) {
+        setForm({
+          full_name: initialData.full_name || '',
+          cpf: initialData.cpf || '',
+          rg: initialData.rg || '',
+          birth_date: initialData.birth_date ? String(initialData.birth_date).slice(0, 10) : '',
+          address: initialData.address || '',
+          phone: initialData.phone || '',
+          email: initialData.email || '',
+          work_card_number: initialData.work_card_number || '',
+          work_card_series: initialData.work_card_series || '1234',
+          admission_date: initialData.admission_date ? String(initialData.admission_date).slice(0, 10) : '',
+          status: initialData.status || 'ativo',
+          department_id: initialData.department_id || 1,
+          position_id: initialData.position_id || 1,
+          salary: initialData.salary || 0,
+          pis_pasep: initialData.pis_pasep || '',
+          bank_name: initialData.bank_name || 'Banco do Brasil',
+          bank_agency: initialData.bank_agency || '',
+          bank_account: initialData.bank_account || '',
+          bank_account_type: initialData.bank_account_type || 'corrente',
+        });
+      } else if (depts.length || pos.length) {
         setForm(prev => ({
           ...prev,
           ...(depts.length && { department_id: depts[0].id }),
@@ -47,7 +71,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ onSubmit }) => {
         }));
       }
     });
-  }, []);
+  }, [initialData]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -168,6 +192,7 @@ const EmployeeForm: React.FC<EmployeeFormProps> = ({ onSubmit }) => {
       </div>
       <div className="form-actions">
         <Button type="submit">Salvar</Button>
+        {onCancel && <button type="button" className="btn-cancel" onClick={onCancel}>Cancelar</button>}
       </div>
     </form>
   );
